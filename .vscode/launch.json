@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "ProcessingSetup",
+      "request": "launch",
+      "mainClass": "setup.ProcessingSetup",
+      "projectName": "tp1"
+    },
+    {
+      "type": "java",
+      "name": "Hello",
+      "request": "launch",
+      "mainClass": "setup.Hello",
+      "projectName": "tp1"
+    }
+  ]
+}
