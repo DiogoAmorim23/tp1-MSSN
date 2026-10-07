@@ -1,5 +1,4 @@
 package setup;
-import processing.core.*;
 import processing.core.PApplet;
 import processing.core.PImage; // Para carregar imagens
 
@@ -11,7 +10,7 @@ public class Hello extends PApplet {
     }
 
     @Override
-    public void settings() {
+    public void settings() { // Set the size of the window
         size(800, 600);
     }
 
@@ -34,5 +33,3 @@ public class Hello extends PApplet {
     }
 
 }
-
-

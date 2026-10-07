@@ -36,6 +36,7 @@ public class ProcessingSetup extends PApplet {
 		// app = new TestCA();
 		app = new DLA();
 		// app = new TestGOL();
+		// app = new ca.ForestFireApp();
 		PApplet.main(ProcessingSetup.class);
 	}
 	

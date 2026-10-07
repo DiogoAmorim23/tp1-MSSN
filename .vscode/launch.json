@@ -5,14 +5,14 @@
       "type": "java",
       "name": "ProcessingSetup",
       "request": "launch",
-      "mainClass": "setup.ProcessingSetup",
-      "projectName": "tp1"
+      "mainClass": "ProcessingSetup",
+      "projectName": "tp1_b0fc1150"
     },
     {
       "type": "java",
-      "name": "Hello",
+      "name": "Correr simulação",
       "request": "launch",
-      "mainClass": "setup.Hello",
+      "mainClass": "ProcessingSetup",
       "projectName": "tp1"
     }
   ]

@@ -4,8 +4,13 @@
     {
       "label": "compilar",
       "type": "shell",
-      "command": "javac -encoding UTF-8 -cp \"lib/core-4.5.6.jar\" -d bin (Get-ChildItem src -Recurse -Filter *.java | ForEach-Object { $_.FullName })",
-      "options": { "shell": { "executable": "powershell.exe", "args": ["-NoProfile", "-Command"] } },
+      "command": "javac",
+      "args": [
+        "-encoding", "UTF-8",
+        "-cp", "lib/core-4.5.6.jar;src",
+        "-d", "bin",
+        "src/*.java"
+      ],
       "group": { "kind": "build", "isDefault": true },
       "problemMatcher": []
     }
