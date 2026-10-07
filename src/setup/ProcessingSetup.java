@@ -1,4 +1,5 @@
 package setup;
+import ca.TestGOL;
 import dla.DLA;
 import processing.core.PApplet;
 
@@ -30,13 +31,17 @@ public class ProcessingSetup extends PApplet {
 	public void mousePressed() {
 		app.mousePressed(this);
 	}
+
+	@Override
+	public void keyPressed() {
+		app.keyPressed(this);
+	}
 	
 	public static void main(String[] args) {
-		// app = new Hello();
-		// app = new TestCA();
-		app = new DLA();
-		// app = new TestGOL();
-		// app = new ca.ForestFireApp();
+		// app = new Hello(); // Correr o Hello
+		// app = new TestCA(); 
+		// app = new DLA(); // Correr o DLA
+		app = new TestGOL(); // Correr o jogo da vida
 		PApplet.main(ProcessingSetup.class);
 	}
 	

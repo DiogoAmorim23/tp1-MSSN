@@ -2,9 +2,6 @@ package ca;
 
 import processing.core.PApplet;
 
-/**
- * @author Hugo Sousa
- */
 public class GameOfLife extends CellularAutomata {
 
 	public GameOfLife(PApplet p, int nRows, int nCols, int nStates, int radiusNeigh) {

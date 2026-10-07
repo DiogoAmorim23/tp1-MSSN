@@ -33,4 +33,9 @@ public class TestCA implements IProcessingApp {
 		}
 	}
 
+	@Override
+	public void keyPressed(PApplet p) {
+		// No keyboard controls in this cellular automaton demo.
+	}
+
 }

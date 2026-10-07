@@ -5,6 +5,13 @@
       "type": "java",
       "name": "ProcessingSetup",
       "request": "launch",
+      "mainClass": "setup.ProcessingSetup",
+      "projectName": "tp1_dfc22bdb"
+    },
+    {
+      "type": "java",
+      "name": "ProcessingSetup",
+      "request": "launch",
       "mainClass": "ProcessingSetup",
       "projectName": "tp1_b0fc1150"
     },

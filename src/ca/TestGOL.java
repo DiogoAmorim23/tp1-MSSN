@@ -10,6 +10,7 @@ public class TestGOL implements IProcessingApp {
 	private int nStates     = 2;
 	private int radiusNeigh = 1;
 	private int generation  = 0;
+	private boolean running = false;
 	private GameOfLife gol;
 	
 	@Override
@@ -20,22 +21,16 @@ public class TestGOL implements IProcessingApp {
 	
 	/**
 	 * To create, click on the cells
-	 * To start simulation press 'SPACE'
-	 * To stop simulation press any key
+	 * To start/stop simulation press 'SPACE'
 	 * To clear window press 'C'
-	 * To start again press any key
 	 */
 	@Override
 	public void draw(PApplet p, float dt) {
-		
-		gol.display(p);
-		if (p.key == 32) { // 'SPACE'
+		if (running) {
 			gol.updateGOL(); 
 			System.out.println(generation++); // number of generations
-		} else if (p.key == 'c') { // 'C'
-			gol = new GameOfLife(p, nrows, ncols, nStates, radiusNeigh);
-			generation = 0;
 		}
+		gol.display(p);
 		// p.delay(1000); // waits 1 second before the next generation
 		
 	}
@@ -54,6 +49,17 @@ public class TestGOL implements IProcessingApp {
 //			neigh[i].setState(nStates-1);
 //		}
 		
+	}
+
+	@Override
+	public void keyPressed(PApplet p) {
+		if (p.key == ' ') {
+			running = !running;
+		} else if (p.key == 'c' || p.key == 'C') {
+			gol = new GameOfLife(p, nrows, ncols, nStates, radiusNeigh);
+			generation = 0;
+			running = false;
+		}
 	}
 
 }

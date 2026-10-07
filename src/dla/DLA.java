@@ -90,8 +90,12 @@ public class DLA implements IProcessingApp {
 
 	@Override
 	public void mousePressed(PApplet p) {
-		// TODO Auto-generated method stub
-		
+		// No mouse interaction in the basic DLA simulation.
+	}
+
+	@Override
+	public void keyPressed(PApplet p) {
+		// No keyboard interaction in the basic DLA simulation.
 	}
 
 }
