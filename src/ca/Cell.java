@@ -17,16 +17,12 @@ public class Cell {
 		this.neighbors = null;
 	}
 	
-	/**
-	 * @return row
-	 */
+	// retorna linha
 	public int getRow() {
 		return this.row;
 	}
 	
-	/**
-	 * @return column 
-	 */
+	// retorna coluna
 	public int getCol() {
 		return this.col;
 	}
