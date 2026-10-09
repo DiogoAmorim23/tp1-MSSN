@@ -5,12 +5,12 @@ import setup.IProcessingApp;
 
 public class TestGOL implements IProcessingApp {
 	
-	private int nrows       = 60;
-	private int ncols       = 80;
+	private int ncols       = 40;
+	private int nrows       = 30;
 	private int nStates     = 2;
 	private int radiusNeigh = 1;
 	private int generation  = 0;
-	private boolean running = false;
+	private boolean running = false; // Programa começa parado
 	private GameOfLife gol;
 	
 	@Override

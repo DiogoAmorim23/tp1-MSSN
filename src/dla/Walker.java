@@ -65,6 +65,14 @@ public class Walker {
 	public State getState() {
 		return state;
 	}
+
+	public float getX() {
+		return pos.x;
+	}
+
+	public float getY() {
+		return pos.y;
+	}
 	
 	/**
 	 * Method to set state and color of a Walker
@@ -91,7 +99,7 @@ public class Walker {
 		for (Walker w : walkers) 
 			if (w.state == State.STOPPED) {
 				float dist = PVector.dist(pos,  w.pos);
-				if (dist < 2*radius) {
+				if (dist < radius + w.radius) {
 					setState(p, State.STOPPED);
 					num_wanders--;
 					break;
