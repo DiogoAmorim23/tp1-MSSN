@@ -56,9 +56,10 @@ public class GameOfLife extends CellularAutomata {
 				nextGen[i][j]  = c.getState();
 				int neighAlive = countNeighAlive(c);
 				if (c.getState() == 1) {
-					if (neighAlive < 2) nextGen[i][j] = 0; // cell dies of loneliness
-					if (neighAlive > 3)	nextGen[i][j] = 0; // cell dies of overcrowding
+					if (neighAlive < 1) nextGen[i][j] = 0; // cell dies of loneliness
+					if (neighAlive > 5)	nextGen[i][j] = 0; // cell dies of overcrowding
 				} else {
+					
 					if (neighAlive == 3) nextGen[i][j] = 1; // cell comes to life
 				}
 				if (nextGen[i][j] == 1) {

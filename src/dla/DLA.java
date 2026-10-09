@@ -33,12 +33,82 @@ public class DLA implements IProcessingApp {
 		Walker.num_wanders = 0;
 		Walker.num_stopped = 0;
 
-		// A seed particle stays in the middle; all other particles wander.
-		Walker w1 = new Walker(p, new PVector(p.width/2, p.height/2)); // Partícula inicial (semente) que fica no centro da tela
-		w1.setColor(p.color(255, 0, 255)); // Cor da partícula inicial (semente) do DLA
-		walkers.add(w1); // Adiciona a partícula inicial (semente) à lista de partículas do DLA
+		/*
+		 * Escolhe UMA forma para a semente inicial do agregado:
+		 * deixa ativa apenas uma opção (comenta a atual e descomenta outra).
+		 * Os caminhantes móveis continuam a ser lançados numa circunferência,
+		 * como já acontecia; estas opções mudam a forma inicial do agregado.
+		 */
+		// addPointSeed(p);       // Padrão atual: uma partícula no centro.
+		// addLineSeed(p);     // Linha horizontal centrada.
+		// addCircleSeed(p);   // Circunferência de partículas paradas.
+		// addSquareSeed(p);   // Contorno de um quadrado.
+		addCustomSeed(p);   // Exemplo de forma arbitrária (um L).
+
 		for (int i = 0; i < NUM_WALKERS; i++) {
 			walkers.add(new Walker(p, nextWalkerRadius)); // Adiciona uma partícula que caminha aleatoriamente à lista de partículas do DLA
+		}
+	}
+
+	private void addSeed(PApplet p, float x, float y) {
+		Walker seed = new Walker(p, new PVector(x, y));
+		seed.setColor(p.color(255, 0, 255));
+		walkers.add(seed);
+	}
+
+	private void addPointSeed(PApplet p) {
+		addSeed(p, p.width / 2f, p.height / 2f);
+	}
+
+	private void addLineSeed(PApplet p) {
+		float centerX = p.width / 2f;
+		float centerY = p.height / 2f;
+		for (float x = centerX - 70; x <= centerX + 70; x += 14) {
+			addSeed(p, x, centerY);
+		}
+	}
+
+	private void addCircleSeed(PApplet p) {
+		float centerX = p.width / 2f;
+		float centerY = p.height / 2f;
+		float radius = 70;
+		int particles = 32;
+		for (int i = 0; i < particles; i++) {
+			double angle = 2 * Math.PI * i / particles;
+			float x = centerX + radius * (float) Math.cos(angle);
+			float y = centerY + radius * (float) Math.sin(angle);
+			addSeed(p, x, y);
+		}
+	}
+
+	private void addSquareSeed(PApplet p) {
+		float centerX = p.width / 2f;
+		float centerY = p.height / 2f;
+		float halfSide = 70;
+		float spacing = 14;
+		for (float offset = -halfSide; offset <= halfSide; offset += spacing) {
+			addSeed(p, centerX + offset, centerY - halfSide); // lado superior
+			addSeed(p, centerX + offset, centerY + halfSide); // lado inferior
+			if (offset > -halfSide && offset < halfSide) {
+				addSeed(p, centerX - halfSide, centerY + offset); // lado esquerdo
+				addSeed(p, centerX + halfSide, centerY + offset); // lado direito
+			}
+		}
+	}
+
+	private void addCustomSeed(PApplet p) {
+		/*
+		 * Forma arbitrária de exemplo: a letra L.
+		 * Acrescenta ou altera coordenadas (x, y) relativas ao centro.
+		 * Mantém cerca de 14 píxeis entre pontos para partículas de raio 7.
+		 */
+		float centerX = p.width / 2f;
+		float centerY = p.height / 2f;
+		for (float y = -100; y <= 100; y += 14) {
+			addSeed(p, centerX - 0, centerY + y);
+		}
+		for (float x = -100; x <= 100 ; x += 14) {
+			addSeed(p, centerX + x, centerY + 0);
 		}
 	}
 

@@ -12,6 +12,8 @@ public class TestGOL implements IProcessingApp {
 	private int generation  = 0;
 	private boolean running = false; // Programa começa parado
 	private GameOfLife gol;
+	private float tempoAcumulado = 0; // tempo acumulado desde a última atualização da simulação
+	private float intervaloGeracao = 0.2f; // intervalo de tempo entre gerações (em segundos)
 	
 	@Override
 	public void setup(PApplet p) {
@@ -27,12 +29,14 @@ public class TestGOL implements IProcessingApp {
 	@Override
 	public void draw(PApplet p, float dt) {
 		if (running) {
-			gol.updateGOL(); 
-			System.out.println(generation++); // number of generations
+			tempoAcumulado += dt; // acumula o tempo desde a última atualização
+			if (tempoAcumulado >= intervaloGeracao) {
+				gol.updateGOL(); 
+				System.out.println(generation++); // number of generations
+				tempoAcumulado -= intervaloGeracao; // reseta o tempo acumulado
+			}
 		}
 		gol.display(p);
-		// p.delay(1000); // waits 1 second before the next generation
-		
 	}
 
 	@Override
