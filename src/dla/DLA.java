@@ -17,10 +17,22 @@ public class DLA implements IProcessingApp {
 	private static final float MIN_WALKER_RADIUS = 1.5f;
 	private boolean stopSpawning = false;
 	private boolean finished = false;
+	private boolean paused = false;
 	
 	@Override 
 	public void setup(PApplet p) { // Inicializa a simulação DLA
+		resetSimulation(p);
+	}
+
+	private void resetSimulation(PApplet p) {
 		walkers  = new ArrayList<Walker>(); // Inicializar a lista de partículas (construtor)
+		nextWalkerRadius = 7f;
+		stopSpawning = false;
+		finished = false;
+		paused = false;
+		Walker.num_wanders = 0;
+		Walker.num_stopped = 0;
+
 		// A seed particle stays in the middle; all other particles wander.
 		Walker w1 = new Walker(p, new PVector(p.width/2, p.height/2)); // Partícula inicial (semente) que fica no centro da tela
 		w1.setColor(p.color(255, 0, 255)); // Cor da partícula inicial (semente) do DLA
@@ -33,7 +45,7 @@ public class DLA implements IProcessingApp {
 	@Override
 	public void draw(PApplet p, float dt) {
 		p.background(0); // Limpa a tela a cada frame (preto)
-		if (!finished) {
+		if (!finished && !paused) {
 			for (int i = 0; i < NUM_STEPS_PER_FRAME; i++) {
 				for (Walker w : walkers) {
 					if (w.getState() == State.WANDER) {
@@ -104,7 +116,11 @@ public class DLA implements IProcessingApp {
 
 	@Override
 	public void keyPressed(PApplet p) {
-		// No keyboard interaction in the basic DLA simulation.
+		if (p.key == ' ') {
+			paused = !paused;
+		} else if (p.key == 'c' || p.key == 'C') {
+			resetSimulation(p);
+		}
 	}
 
 }

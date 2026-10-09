@@ -39,8 +39,7 @@ public class TestGOL implements IProcessingApp {
 	public void mousePressed(PApplet p) {
 		
 		Cell cell = gol.pixel2Cell(p.mouseX, p.mouseY);
-		if (cell.getState() == 0) cell.setState(nStates-1); // add cell
-		else cell.setState(0); // erase cell 
+		gol.toggleCell(cell);
 		
 		
 		// debug Moore neighbors
