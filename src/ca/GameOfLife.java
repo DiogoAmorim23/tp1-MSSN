@@ -6,30 +6,29 @@ public class GameOfLife extends CellularAutomata {
 
 	private int[][] aliveAge;
 
-	public GameOfLife(PApplet p, int nRows, int nCols, int nStates, int radiusNeigh) {
-		super(p, nRows, nCols, nStates, radiusNeigh);
+	// Construtor da classe GameOfLife
+	public GameOfLife(PApplet p, int nRows, int nCols, int nStates, int neighborRadius) {
+		super(p, nRows, nCols, nStates, neighborRadius);
 		aliveAge = new int[nRows][nCols];
 	}
 	
-	/**
-	 * Sets a random color for the agents and a black background
-	 */
+	// Define as cores para o estado das células vivas e mortas
 	public void setStateColors(PApplet p) {
-		colors[0] = p.color(0); // black background
-		colors[1] = p.color(0, 80, 255); // starting color for young cells
+		colors[0] = p.color(0); // celula morta: preta
+		colors[1] = p.color(0, 80, 255); // celula viva: azul
 	}
 
 	@Override
-	public void initRandom() {
-		super.initRandom();
+	public void initRandom() { // Inicializa a matriz aliveAge com base no estado inicial das células
+		super.initRandom(); // Chama o método initRandom() da classe pai para inicializar as células aleatoriamente
 		for (int i = 0; i < nRows; i++) {
 			for (int j = 0; j < nCols; j++) {
-				aliveAge[i][j] = cells[i][j].getState() == 1 ? 1 : 0;
+				aliveAge[i][j] = cells[i][j].getState() == 1 ? 1 : 0; // Se a célula estiver viva, define a idade como 1, caso contrário, define como 0
 			}
 		}
 	}
 
-	/** Toggle a cell and reset its age when its state is changed by the user. */
+	// Trocar o estado de uma célula e redefinir a sua idade quando o seu estado é alterado pelo usuário
 	public void toggleCell(Cell cell) {
 		int row = cell.getRow();
 		int col = cell.getCol();
@@ -42,32 +41,41 @@ public class GameOfLife extends CellularAutomata {
 		}
 	}
 	
-	/**
-	 * Method called in each frame to update game's grid
-	 */
-	public void updateGOL() {
+	// Metodo chamado a cada frame que atualiza o estado das células com base nas regras do Jogo da Vida
+	public void UpdateGame() {
 		
-		Cell c          = null;
-		int[][] nextGen = new int[nRows][nCols]; // next GOL generation
+		Cell c = null;
+		int[][] nextGen = new int[nRows][nCols]; // proxima geração de células
 		int[][] nextAge = new int[nRows][nCols];
 		for (int i = 0; i < nRows; i++) {
 			for (int j = 0; j < nCols; j++) {
 				c              = cells[i][j];
 				nextGen[i][j]  = c.getState();
-				int neighAlive = countNeighAlive(c);
+				int NeighborsAlive = countNeighborsAlive(c);
 				if (c.getState() == 1) {
-					if (neighAlive < 1) nextGen[i][j] = 0; // cell dies of loneliness
-					if (neighAlive > 5)	nextGen[i][j] = 0; // cell dies of overcrowding
+					/*
+					 * VARIANTE IMPLEMENTADA (sobrevive com 1 a 5 vizinhos; nasce com 3).
+					 * Para usar a versão clássica, comentar estas duas condições e descomentar as duas condições identificadas como CLASSIC 23/3 abaixo.
+					 */
+					// if (NeighborsAlive < 1) nextGen[i][j] = 0; // nossa variante: morre com 0 vizinhos
+					// if (NeighborsAlive > 5) nextGen[i][j] = 0; // nossa variante: morre com mais de 5 vizinhos
+
+					/*
+					 * CLASSIC 23/3: a célula viva sobrevive apenas com 2 ou 3 vizinhos. Para desativar, 
+					 * comentar estas duas linhas e descomentar as duas condições acima.
+					 */
+					if (NeighborsAlive < 2) nextGen[i][j] = 0; // morre com 0 ou 1 vizinho
+					if (NeighborsAlive > 3) nextGen[i][j] = 0; // morre com 4 ou mais vizinhos
 				} else {
-					
-					if (neighAlive == 3) nextGen[i][j] = 1; // cell comes to life
+					// Regra de nascimento comum às duas variantes: nasce com exatamente 3 vizinhos.
+					if (NeighborsAlive == 3) nextGen[i][j] = 1;
 				}
 				if (nextGen[i][j] == 1) {
-					nextAge[i][j] = c.getState() == 1 ? aliveAge[i][j] + 1 : 1;
+					nextAge[i][j] = c.getState() == 1 ? aliveAge[i][j] + 1 : 1; // Incrementa a idade da célula viva ou define como 1 se a célula acabou de nascer
 				}
 			}
 		}
-		// cells matrix = nextGen matrix
+		// Atualiza o estado das células e a idade das células vivas com base na próxima geração calculada
 		for (int i = 0; i < nRows; i++) {
 			for (int j = 0; j < nCols; j++) {
 				cells[i][j].setState(nextGen[i][j]);
@@ -78,7 +86,7 @@ public class GameOfLife extends CellularAutomata {
 	}
 
 	@Override
-	public void display(PApplet p) {
+	public void display(PApplet p) { // Desenha as células na tela com base no seu estado e idade
 		int[] ageColors = {
 			p.color(0, 80, 255),   // young: blue
 			p.color(0, 230, 255),  // cyan
@@ -104,17 +112,14 @@ public class GameOfLife extends CellularAutomata {
 		}
 	}
 	
-	/**
-	 * Count number of neighbors alive
-	 * @param cell instance of class Cell
-	 */
-	public int countNeighAlive(Cell cell) {
+	// Conta o número de vizinhos vivos de uma célula usando a vizinhança de Moore
+	public int countNeighborsAlive(Cell cell) {
 		
 		int count = 0; 
-		int x     = cell.getCol();
-		int y     = cell.getRow();
+		int x = cell.getCol();
+		int y = cell.getRow();
 		
-		// count neighbors with radiusNeigh = 1
+		// contar os vizinhos com neighborRadius = 1
 		for (int i = -1; i < 2; i++) {
 			for (int j = -1; j < 2; j++) {
 				

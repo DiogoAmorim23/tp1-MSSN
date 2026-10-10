@@ -39,10 +39,10 @@ public class ProcessingSetup extends PApplet {
 	}
 	
 	public static void main(String[] args) {
-		// app = new Hello(); // Correr o Hello
+		// app = new Hello();
 		// app = new TestCA(); 
-		app = new DLA(); // Correr o DLA
-		// app = new TestGOL(); // Correr o jogo da vida
+		// app = new DLA(); // DESCOMENTAR PARA CORRER O DLA
+		app = new TestGOL(); // DESCOMENTAR PARA CORRER O JOGO DA VIDA
 		PApplet.main(ProcessingSetup.class);
 	}
 	

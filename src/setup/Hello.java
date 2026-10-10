@@ -16,7 +16,7 @@ public class Hello extends PApplet {
 
     @Override
     public void setup() {
-        img = loadImage("C:\\Users\\carla\\Downloads\\Eu sou fixe, mas o Tiago não. - Discord 16_02_2021 16_56_48.png"); // Declare an image variable
+        img = loadImage("C:\\image.png"); // Declare an image variable
         if (img != null) img.resize(100,100);
 
         fill(255, 0, 0); // Set circle color to red

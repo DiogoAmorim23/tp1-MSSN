@@ -11,7 +11,7 @@ import setup.IProcessingApp;
 public class DLA implements IProcessingApp {
 
 	private List<Walker> walkers; // Lista de todas as partículas (caminhantes) do DLA
-	private int NUM_WALKERS         = 100; // Número de partículas que caminham aleatoriamente
+	private int NUM_WALKERS = 100; // Número de partículas que caminham aleatoriamente
 	private int NUM_STEPS_PER_FRAME = 100; // Número de passos que cada partícula dá a cada frame (quanto maior, mais rápido o DLA cresce)
 	private float nextWalkerRadius = 7f;
 	private static final float MIN_WALKER_RADIUS = 1.5f;
@@ -34,16 +34,16 @@ public class DLA implements IProcessingApp {
 		Walker.num_stopped = 0;
 
 		/*
-		 * Escolhe UMA forma para a semente inicial do agregado:
-		 * deixa ativa apenas uma opção (comenta a atual e descomenta outra).
+		 * Escolher UMA forma para a semente inicial do agregado:
+		 * deixar ativa apenas uma opção (comenta a atual e descomenta outra).
 		 * Os caminhantes móveis continuam a ser lançados numa circunferência,
 		 * como já acontecia; estas opções mudam a forma inicial do agregado.
 		 */
-		// addPointSeed(p);       // Padrão atual: uma partícula no centro.
+		addPointSeed(p);       // Padrão atual: uma partícula no centro.
 		// addLineSeed(p);     // Linha horizontal centrada.
 		// addCircleSeed(p);   // Circunferência de partículas paradas.
 		// addSquareSeed(p);   // Contorno de um quadrado.
-		addCustomSeed(p);   // Exemplo de forma arbitrária (um L).
+		// addCustomSeed(p);   // Exemplo de forma arbitrária (um +).
 
 		for (int i = 0; i < NUM_WALKERS; i++) {
 			walkers.add(new Walker(p, nextWalkerRadius)); // Adiciona uma partícula que caminha aleatoriamente à lista de partículas do DLA
@@ -98,9 +98,9 @@ public class DLA implements IProcessingApp {
 
 	private void addCustomSeed(PApplet p) {
 		/*
-		 * Forma arbitrária de exemplo: a letra L.
-		 * Acrescenta ou altera coordenadas (x, y) relativas ao centro.
-		 * Mantém cerca de 14 píxeis entre pontos para partículas de raio 7.
+		 * Forma arbitrária de exemplo: um +
+		 * Acrescentar ou alterar coordenadas (x, y) relativas ao centro
+		 * Manter cerca de 14 píxeis entre pontos para partículas de raio 7
 		 */
 		float centerX = p.width / 2f;
 		float centerY = p.height / 2f;
@@ -149,14 +149,11 @@ public class DLA implements IProcessingApp {
 
 		for (Walker w : walkers) w.display(p); // Desenha todas as partículas na tela
 		
-//		System.out.println("Stopped = " + Walker.num_stopped +
-//						   " Wander = " + Walker.num_wanders + 
-//						   " Radius = " + w.getRadius());
+		// DESCOMENTAR ISTO PARA VERIFICAR O NÚMERO DE PARTÍCULAS PARADAS, O NÚMERO DE PARTÍCULAS MÓVEIS E O RAIO ATUAL DAS PARTÍCULAS
+        // System.out.println("Stopped = " + Walker.num_stopped + " Wander = " + Walker.num_wanders + " Radius = " + w.getRadius());
 	}
 	
-	/**
-	 * Colors stopped particles according to their distance from the center.
-	 */
+	// Cor das partículas paradas de acordo com a distância ao centro.
 	private void colorPattern(PApplet p, Walker w) {
 		float dx = w.getX() - p.width / 2f;
 		float dy = w.getY() - p.height / 2f;
@@ -181,14 +178,13 @@ public class DLA implements IProcessingApp {
 
 	@Override
 	public void mousePressed(PApplet p) {
-		// No mouse interaction in the basic DLA simulation.
 	}
 
 	@Override
 	public void keyPressed(PApplet p) {
-		if (p.key == ' ') {
+		if (p.key == ' ') { // CARREGAR ESPAÇO PARA PAUSAR OU RETOMAR A SIMULAÇÃO
 			paused = !paused;
-		} else if (p.key == 'c' || p.key == 'C') {
+		} else if (p.key == 'c' || p.key == 'C') { // CARREGAR C PARA REINICIAR A SIMULAÇÃO
 			resetSimulation(p);
 		}
 	}

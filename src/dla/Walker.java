@@ -15,12 +15,12 @@ public class Walker {
 	private PVector pos;
 	private State state;
 	private int color;
-	private float radius          = 7;
+	private float radius = 7;
 	public static int num_wanders = 0;
 	public static int num_stopped = 0;
 	
 	public Walker(PApplet p, float radius) {
-		// pos   = new PVector(p.random(p.width), p.random(p.height));
+		// pos = new PVector(p.random(p.width), p.random(p.height));
 		this.radius = radius;
 		pos = new PVector(p.width/2, p.height/2);
 		PVector r = PVector.random2D();
@@ -35,27 +35,21 @@ public class Walker {
 		setState(p, State.STOPPED);
 	}
 	
-	/**
-	 * Returns Walker's radius 
-	 */
+	// Retorna o raio do Walker
 	public float getRadius() {
 		
 		return this.radius;
 		
 	}
 	
-	/**
-	 * Sets Walker's radius
-	 */
+	// Define o raio do Walker
 	public void setRadius(int rad) {
 		
 		this.radius = rad;
 		
 	}
 	
-	/**
-	 * Sets Walker's color
-	 */
+	// Define a cor do Walker
 	public void setColor(int c) {
 		
 		this.color = c;
@@ -74,9 +68,7 @@ public class Walker {
 		return pos.y;
 	}
 	
-	/**
-	 * Method to set state and color of a Walker
-	 */
+	// Metodo para definir o estado e a cor de um Walker
 	public void setState(PApplet p, State state) {
 		this.state = state;
 		if (state == State.STOPPED) {
@@ -89,10 +81,8 @@ public class Walker {
 		}
 	}
 	
-	/**
-	 * Method to update state of the walkers as they collide
-	 * with other walkers and subtract them from walkers List
-	 */
+	// Metodo para atualizar o estado dos walkers à medida que colidem
+	// com outros walkers e subtrai-los da lista de walkers
 	public void updateState(PApplet p, List<Walker> walkers) {
 		if (state == State.STOPPED) return;
 		
@@ -107,6 +97,7 @@ public class Walker {
 			}
 	}
 	
+	// Metodo para fazer o walker se mover aleatoriamente
 	public void wander(PApplet p) {
 		PVector step = PVector.random2D();
 		pos.add(step);
@@ -115,7 +106,7 @@ public class Walker {
 		pos.y = PApplet.constrain(pos.y, 0, p.height);
 	}
 	
-	public void display(PApplet p) {
+	public void display(PApplet p) { // Metodo para desenhar o Walker na tela
 		// p.fill(color);
 		// p.circle(pos.x, pos.y, 2*radius);
 		p.strokeWeight(radius * 2);
